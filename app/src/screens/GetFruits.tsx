@@ -17,12 +17,13 @@ export default function GetFruits() {
             setLoading(false);
         }
         axios
+            //Faz uma requisicao para o backend que por sua vez retorna a lista de frutas da api externa
             .get("http://localhost:3002/")
             .then(res => {
                 if(res){   
                     frutas = []      
                     for(let i = 0; i < res.data.length; i++) {
-                        let fruit = new Fruit(res.data[i].name, res.data[i].nutritions);
+                        let fruit = new Fruit(res.data[i].name, res.data[i].nutritions, 1);
                         frutas.push(fruit);
                     }     
                     setProdutos(frutas); 

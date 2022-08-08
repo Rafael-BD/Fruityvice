@@ -11,38 +11,48 @@ import SpaSharpIcon from '@mui/icons-material/SpaSharp';
 import Context from '../contexts/Context';
 
 export default function Header() {
-    const {carrinho, setCarrinho, noCarrinho, setNoCarrinho } = React.useContext(Context);
-    const qtdCarrinho = carrinho.length;
+    const {carrinho, setCarrinho, noCarrinho, setNoCarrinho, update, setUpdate } = React.useContext(Context);
 
-     return (
-        <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{backgroundColor: 'green'}}>
-            <Toolbar>
-            <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="Home"
-                sx={{ mr: 2 }}
-                onClick={() => {setNoCarrinho(false)}}
-            >
-                <SpaSharpIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Fruityvice Store
-            </Typography>
+    const header = (
+        <React.Fragment>
+            <Box sx={{ flexGrow: 1, marginBottom: 10, opacity: 0.9, }}>
+            <AppBar position="fixed" style={{backgroundColor: 'green'}}>
+                <Toolbar>
                 <IconButton
                     size="large"
-                    aria-label="show 17 new notifications"
+                    edge="start"
                     color="inherit"
-                    onClick={() => {setNoCarrinho(true)}}
+                    aria-label="Home"
+                    sx={{ mr: 2 }}
+                    onClick={() => {setNoCarrinho(false)}}
                 >
-                    <Badge badgeContent={qtdCarrinho} color="primary">
-                        <ShoppingCartIcon />
-                    </Badge>
+                    <SpaSharpIcon />
                 </IconButton>
-            </Toolbar>
-        </AppBar>
-        </Box>
-    );
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Fruityvice Store
+                </Typography>
+                    <IconButton
+                        size="large"
+                        aria-label="show new notifications"
+                        color="inherit"
+                        onClick={() => {setNoCarrinho(true)}}
+                    >
+                        <Badge badgeContent={carrinho.length} color="primary">
+                            <ShoppingCartIcon />
+                        </Badge>
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            {setUpdate(false)}
+            </Box>
+            </React.Fragment>
+    )
+    //Caso o estado do carrinho seja alterado a variavel update será mudada para true e o componente Header será renderizado novamente para
+    //atualizar a quantidade de produtos no carrinho
+    if(update) {
+        return (header);
+    }else{
+        return (header)
+    }
+     
 }
